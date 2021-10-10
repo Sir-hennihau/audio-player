@@ -1,6 +1,6 @@
 export interface PlayerState {
-  currentlyPlaying: string;
+  currentlyPlaying: Song;
   songs: Song[];
 }
 
-export type Song = { name: string; coverPath: string };
+export type Song = { coverPath: string; name: string; url: string };
