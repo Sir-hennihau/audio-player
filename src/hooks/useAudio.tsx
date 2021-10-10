@@ -1,24 +1,37 @@
 import { useState, useEffect } from "react";
+import { setIsPlaying } from "../store/playerStore.ts/playerSlice";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../store/root-store/rootStoreHooks";
 
 export const useAudio = (url: string) => {
+  // --- STATE ---
   const [audio, setAudio] = useState(new Audio(url));
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying } = useAppSelector(({ player }) => player);
+  const dispatch = useAppDispatch();
+
+  // --- EFFECTS ---
 
   useEffect(() => {
     isPlaying ? audio.play() : audio.pause();
-  }, [isPlaying]);
+  }, [isPlaying, audio]);
 
   useEffect(() => {
     setAudio(new Audio(url));
+
+    isPlaying && audio.pause();
   }, [url]);
 
   useEffect(() => {
-    audio.addEventListener("ended", () => setIsPlaying(false));
+    const onEnded = () => {
+      dispatch(setIsPlaying(false));
+    };
+
+    audio.addEventListener("ended", onEnded);
 
     return () => {
-      audio.removeEventListener("ended", () => setIsPlaying(false));
+      audio.removeEventListener("ended", onEnded);
     };
-  }, []);
-
-  return { isPlaying, setIsPlaying };
+  }, [audio]);
 };

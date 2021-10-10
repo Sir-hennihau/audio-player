@@ -7,7 +7,10 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../store/root-store/rootStoreHooks";
-import { setCurrentlyPlayingSong } from "../store/playerStore.ts/playerSlice";
+import {
+  setCurrentlyPlayingSong,
+  setIsPlaying,
+} from "../store/playerStore.ts/playerSlice";
 
 interface SongPreviewProps {
   song: Song;
@@ -18,19 +21,34 @@ export const SongPreview = ({
 }: SongPreviewProps) => {
   // --- STATE ---
 
-  const { currentlyPlaying } = useAppSelector(({ player }) => player);
+  const { currentlyPlaying, isPlaying } = useAppSelector(
+    ({ player }) => player
+  );
 
   const dispatch = useAppDispatch();
 
   // --- CALLBACKS ---
 
   const onIconClick = () => {
-    dispatch(setCurrentlyPlayingSong({ coverPath, name, url }));
+    if (!isPlaying) {
+      dispatch(setCurrentlyPlayingSong({ coverPath, name, url }));
+      dispatch(setIsPlaying(true));
+
+      return;
+    }
+
+    if (currentlyPlaying.url !== url) {
+      dispatch(setCurrentlyPlayingSong({ coverPath, name, url }));
+
+      return;
+    }
+
+    dispatch(setIsPlaying(false));
   };
 
   // --- HELPERS ---
 
-  const isBeingPlayed = name === currentlyPlaying.name;
+  const isBeingPlayed = name === currentlyPlaying.name && isPlaying;
 
   // --- RENDER ---
 

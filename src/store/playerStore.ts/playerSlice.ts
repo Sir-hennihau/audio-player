@@ -14,8 +14,12 @@ export const playerSlice = createSlice({
 
         return;
       }
- */
+      */
       state.currentlyPlaying = action.payload;
+    },
+
+    setIsPlaying: (state, action: PayloadAction<boolean>) => {
+      state.isPlaying = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -25,6 +29,6 @@ export const playerSlice = createSlice({
   },
 });
 
-export const { setCurrentlyPlayingSong } = playerSlice.actions;
+export const { setCurrentlyPlayingSong, setIsPlaying } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

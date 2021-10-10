@@ -14,18 +14,13 @@ export const Player = () => {
 
   const { currentlyPlaying, songs } = useAppSelector(({ player }) => player);
 
-  const { isPlaying, setIsPlaying } = useAudio(currentlyPlaying.url);
+  useAudio(currentlyPlaying.url);
 
   // --- EFFECTS ---
 
   useEffect(() => {
     dispatch(apiGetSongs());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (!currentlyPlaying.url) return;
-    setIsPlaying(true);
-  }, [currentlyPlaying.url]);
 
   // --- RENDER ---
 
