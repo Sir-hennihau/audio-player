@@ -7,6 +7,7 @@ import {
 
 export const useAudio = (url: string) => {
   // --- STATE ---
+
   const [audio, setAudio] = useState(new Audio(url));
   const { isPlaying } = useAppSelector(({ player }) => player);
   const dispatch = useAppDispatch();
@@ -21,6 +22,8 @@ export const useAudio = (url: string) => {
     setAudio(new Audio(url));
 
     isPlaying && audio.pause();
+
+    /* eslint-disable react-hooks/exhaustive-deps*/
   }, [url]);
 
   useEffect(() => {
@@ -33,5 +36,5 @@ export const useAudio = (url: string) => {
     return () => {
       audio.removeEventListener("ended", onEnded);
     };
-  }, [audio]);
+  }, [audio, dispatch]);
 };
