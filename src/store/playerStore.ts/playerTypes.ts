@@ -4,4 +4,10 @@ export interface PlayerState {
   songs: Song[];
 }
 
-export type Song = { coverPath: string; name: string; url: string };
+export type Song = {
+  coverPath: string;
+  id: string;
+  isLiked?: boolean;
+  name: string;
+  url: string;
+};

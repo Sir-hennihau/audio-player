@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import styled from "styled-components";
 import { useAudio } from "../hooks/useAudio";
 import { apiGetSongs } from "../store/playerStore.ts/playerThunks";
 import {
@@ -28,9 +30,16 @@ export const Player = () => {
     <div>
       <h1>Audio Player</h1>
 
-      {songs.map((song, index) => (
-        <SongPreview key={index} song={song} />
-      ))}
+      <SongPreviewContainer>
+        {songs.map((song, index) => (
+          <SongPreview key={index} song={song} />
+        ))}
+      </SongPreviewContainer>
     </div>
   );
 };
+
+const SongPreviewContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
