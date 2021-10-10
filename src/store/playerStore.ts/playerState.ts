@@ -1,3 +1,6 @@
 import { PlayerState } from "./playerTypes";
 
-export const initialPlayerState: PlayerState = { currentlyPlaying: "" };
+export const initialPlayerState: PlayerState = {
+  currentlyPlaying: "",
+  songs: [],
+};

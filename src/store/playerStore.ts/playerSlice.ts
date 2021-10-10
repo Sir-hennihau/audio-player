@@ -13,7 +13,9 @@ export const playerSlice = createSlice({
     }, */
   },
   extraReducers: (builder) => {
-    builder.addCase(apiGetSongs.fulfilled, (state, action) => {});
+    builder.addCase(apiGetSongs.fulfilled, (state, action) => {
+      state.songs = action.payload;
+    });
   },
 });
 
