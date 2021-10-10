@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { useAudio } from "../hooks/useAudio";
 import { apiGetSongs } from "../store/playerStore.ts/playerThunks";
 import {
   useAppDispatch,
@@ -11,7 +12,9 @@ export const Player = () => {
 
   const dispatch = useAppDispatch();
 
-  const { songs } = useAppSelector(({ player }) => player);
+  const { currentlyPlaying, songs } = useAppSelector(({ player }) => player);
+
+  const { isPlaying, setIsPlaying } = useAudio(currentlyPlaying.url);
 
   // --- EFFECTS ---
 
@@ -19,12 +22,19 @@ export const Player = () => {
     dispatch(apiGetSongs());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (!currentlyPlaying.url) return;
+    setIsPlaying(true);
+  }, [currentlyPlaying.url]);
+
   // --- RENDER ---
 
   return (
     <div>
-      {songs.map((song) => (
-        <SongPreview song={song} />
+      <h1>Audio Player</h1>
+
+      {songs.map((song, index) => (
+        <SongPreview key={index} song={song} />
       ))}
     </div>
   );

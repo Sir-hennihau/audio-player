@@ -9,6 +9,12 @@ export const playerSlice = createSlice({
   initialState: initialPlayerState,
   reducers: {
     setCurrentlyPlayingSong: (state, action: PayloadAction<Song>) => {
+      /*       if (state.currentlyPlaying.name === action.payload.name) {
+        state.currentlyPlaying = { coverPath: "", name: "", url: "" };
+
+        return;
+      }
+ */
       state.currentlyPlaying = action.payload;
     },
   },

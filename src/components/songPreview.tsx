@@ -19,7 +19,9 @@ export const SongPreview = ({
   // --- STATE ---
 
   const { currentlyPlaying } = useAppSelector(({ player }) => player);
+
   const dispatch = useAppDispatch();
+
   // --- CALLBACKS ---
 
   const onIconClick = () => {
@@ -28,8 +30,7 @@ export const SongPreview = ({
 
   // --- HELPERS ---
 
-  const isBeingPlayed =
-    url === currentlyPlaying.url && name === currentlyPlaying.name;
+  const isBeingPlayed = name === currentlyPlaying.name;
 
   // --- RENDER ---
 
