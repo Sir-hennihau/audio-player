@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { initialPlayerState } from "./playerState";
-import { PlayerState } from "./playerTypes";
+import { apiGetSongs } from "./playerThunks";
 
 export const playerSlice = createSlice({
   name: "player",
@@ -11,6 +11,9 @@ export const playerSlice = createSlice({
     /*     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.value += action.payload
     }, */
+  },
+  extraReducers: (builder) => {
+    builder.addCase(apiGetSongs.fulfilled, (state, action) => {});
   },
 });
 
